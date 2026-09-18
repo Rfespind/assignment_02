@@ -47,9 +47,13 @@ def clean_currency(value) -> float:
       from the `except`. That is the line that stops one `"N/A"` from killing a
       report of 400 good rows.
     """
-    # TODO: your code here
-    pass
-
+    try:
+        clean_value = str(value)
+        clean_value = clean_value.replace('$', '').replace(',','')
+        clean_value = clean_value.strip()
+        return float(clean_value)
+    except (ValueError, TypeError):
+        return 0.0
 
 def clean_quantity(value) -> int:
     """Convert a raw quantity into an int, using 0 when it cannot be read.
@@ -73,8 +77,11 @@ def clean_quantity(value) -> int:
     - Do not try to translate `"one"` into `1`. A word in a number field is bad
       data, and bad data becomes `0`.
     """
-    # TODO: your code here
-    pass
+    try:
+        clean_qty_value = int(str(value).strip())
+        return clean_qty_value
+    except ValueError:
+        return 0
 
 
 def clean_sales_data(raw_data: list[dict]) -> list[dict]:
@@ -104,8 +111,16 @@ def clean_sales_data(raw_data: list[dict]) -> list[dict]:
       cleaned `price` and `qty` you just stored instead of cleaning the raw values
       a second time.
     """
-    # TODO: your code here
-    pass
+    cleaned = []
+    for row in raw_data:
+      price = clean_currency(row['price'])
+      qty = clean_quantity(row['qty'])
+      total_revenue = price * qty
+      cleaned_row = {'date':row['date'], 'item':row['item'], 'price':price, 'qty':qty, 'total_revenue': total_revenue}
+      cleaned.append(cleaned_row)
+    return cleaned
+
+
 
 
 def calculate_total_revenue(cleaned_data: list[dict]) -> float:
@@ -128,8 +143,10 @@ def calculate_total_revenue(cleaned_data: list[dict]) -> float:
     - Nothing needs cleaning here. These rows already went through
       `clean_sales_data`, so `row["total_revenue"]` is a number you can trust.
     """
-    # TODO: your code here
-    pass
+    total = 0
+    for row in cleaned_data:
+        total = total + row['total_revenue']
+    return total
 
 
 def summarize_by_item(cleaned_data: list[dict]) -> list[dict]:
