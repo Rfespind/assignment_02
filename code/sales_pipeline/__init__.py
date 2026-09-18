@@ -73,8 +73,8 @@ HOW TO BUILD IT
 #       Start with only the functions you have actually written (see note 2 above),
 #       and come back to add the rest as you go.
 from .extract import get_raw_sales_data
-from .transform import clean_sales_data, calculate_total_revenue
-from .display import print_sales_table
+from .transform import clean_sales_data, calculate_total_revenue, summarize_by_item, summarize_by_day, find_top_entry
+from .display import print_sales_table, print_item_table, print_day_table
 # `__all__` is a list of strings naming the public API. It does two jobs.
 #
 # The mechanical one: it controls what `from sales_pipeline import *` brings in.
@@ -88,5 +88,5 @@ from .display import print_sales_table
 # a broken promise; a name imported above but missing here is a feature nobody can
 # find.
 __all__ = [
-    'get_raw_sales_data', 'clean_sales_data', 'calculate_total_revenue', 'print_sales_table'
+    'get_raw_sales_data', 'clean_sales_data', 'calculate_total_revenue', 'summarize_by_item', 'summarize_by_day', 'find_top_entry', 'print_sales_table', 'print_item_table', 'print_day_table'
 ]

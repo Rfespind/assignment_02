@@ -1,6 +1,10 @@
-Write your reflection here.
-
-See reflection.md for what makes a good reflection — be specific, use the
-terminology from this assignment (package, module, ETL, coercion, public API,
-relative import, accumulator, group by, unit vs. integration test), and make it
-actionable.
+In this assignment I built a sales data pipeline as a Python package called sales_pipeline, 
+with extract.py, transform.py, and display.py, and three report programs (main_finance_report.py, 
+main_marketing_report.py, and main_daily_report.py) on top. 
+The main lesson was why a package is worth it: once clean_sales_data and calculate_total_revenue in transform.py worked, 
+main_daily_report.py only needed one new function, summarize_by_day, 
+because summarize_by_item had already shown me the group by pattern with a dictionary accumulator, and find_top_entry could be reused on any summary. 
+The hardest part was coercion, since my first clean_currency never saved the results of .replace(), and I fixed it with try/except for ValueError and TypeError 
+so bad values like "N/A" return 0.0 instead of crashing. In __init__.py I also learned that quotes belong in __all__ but not in the relative imports, 
+and that clean_currency and clean_quantity stay internal because only clean_sales_data calls them. 
+Next time I will test each function in the terminal before running test_unit.py and test_integration.py.
